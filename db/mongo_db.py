@@ -1,3 +1,7 @@
-from flask_pymongo import PyMongo
+from pymongo import MongoClient
 
-mongo = PyMongo()
+mongo_client = MongoClient(host='mongo', port=27017,
+                           username='flaskapp',
+                           password='password',
+                           authSource='admin')
+mongo = mongo_client["test"]

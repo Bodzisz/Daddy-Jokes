@@ -2,7 +2,6 @@ from flask import Flask
 from config import configurations
 from views.auth_views import auth as auth_blueprint
 from db.user_db import db
-from db.mongo_db import mongo
 from views.auth_views import bcrypt, login_manager
 from views.view import view as views_blueprint
 
@@ -11,7 +10,6 @@ def create_app():
     app = Flask(__name__)
     app.config.from_object(configurations.Config)
 
-    mongo.init_app(app)
     bcrypt.init_app(app)
     db.init_app(app)
     login_manager.init_app(app)
