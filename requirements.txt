@@ -1,0 +1,10 @@
+Flask==2.1.2
+flask_pymongo
+pymongo==4.1.1
+flask_sqlalchemy
+dnspython
+flask_login
+flask_wtf
+wtforms
+flask_bcrypt
+pymysql

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>List</title>
+</head>
+<body>
+    <div>
+        <p style="font-size: 20px; text-align: center">
+        <a href="/">Home</a> <br>
+        <a href="/list">List</a> <br>
+        <a href="/logout">Logout</a>
+    </p>
+    </div>
+    <div>
+        <ul>
+            {% for student in students %}
+                <li>{{ student['first_name'] }}  {{ student['last_name'] }}  {{ student['index'] }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>
