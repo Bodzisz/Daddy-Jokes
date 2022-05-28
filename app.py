@@ -7,9 +7,7 @@ from views.auth_views import bcrypt, login_manager
 from views.view import view as views_blueprint
 
 
-
 def create_app():
-    global students_collection
     app = Flask(__name__)
     app.config.from_object(configurations.Config)
 
