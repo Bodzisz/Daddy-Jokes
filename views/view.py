@@ -12,7 +12,8 @@ jokes_collection = mongo.jokes
 @view.route("/")
 def home():
     username = current_user.username if current_user.is_authenticated else None
-    return render_template('index.html', username=username)
+    is_authenticated = current_user.is_authenticated
+    return render_template('index.html', username=username, is_authenticated=is_authenticated)
 
 
 @view.route("/dashboard")
