@@ -23,6 +23,9 @@ class RegisterForm(FlaskForm):
     password = PasswordField(validators=[InputRequired(), Length(
         min=4, max=20)], render_kw={"placeholder": "Password"})
 
+    password_confirm = PasswordField(validators=[InputRequired(), Length(
+        min=4, max=20)], render_kw={"placeholder": "Retype password"})
+
     submit = SubmitField("Register")
 
 
@@ -63,6 +66,8 @@ def register():
 
     if form.validate_on_submit():
         if User.query.filter_by(username=form.username.data).first() is None:
+            if form.password_confirm.data != form.password.data:
+                return render_template('register.html', form=form)
             hashed_password = bcrypt.generate_password_hash(form.password.data)
             new_user = User(username=form.username.data, password=hashed_password)
             db.session.add(new_user)

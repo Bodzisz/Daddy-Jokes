@@ -2,9 +2,9 @@ body {
     text-align: center;
 }
 
-.navbar-custom {
-  height: 100px;
-}
+/*.navbar-custom {*/
+/*  height: 100px;*/
+/*}*/
 
 .grow {
     transition: all .2s ease-in-out;
@@ -12,3 +12,7 @@ body {
 .grow:hover {
     transform: scale(1.4);
 }
+
+/*.navbar-collapse.in {*/
+/*    display: block !important;*/
+/*}*/
