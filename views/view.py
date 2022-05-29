@@ -1,16 +1,18 @@
 from flask import Blueprint, render_template, redirect
 from flask_login import login_required, current_user
 from db.mongo_db import mongo
+import datetime
 
 view = Blueprint('view', __name__, template_folder='templates',
                  static_folder='static')
 
-students_collection = mongo.students
+jokes_collection = mongo.jokes
 
 
 @view.route("/")
 def home():
-    return render_template('index.html')
+    username = current_user.username if current_user.is_authenticated else None
+    return render_template('index.html', username=username)
 
 
 @view.route("/dashboard")
@@ -22,16 +24,17 @@ def dashboard():
 
 @view.route("/list")
 def student_list():
-    students = students_collection.find()
-    return render_template("list.html", students=students)
+    jokes = jokes_collection.find()
+    return render_template("list.html", jokes=jokes)
 
 
 @view.route("/insert_test")
 def insert_test():
-    students_collection.insert_one(
+    jokes_collection.insert_one(
         {
-            'first_name': 'Kacper',
-            'last_name': 'Wojcicki',
-            'index': 123456
+            'name': 'Baba',
+            'content': 'Wchodzi baba do lekarza, a lekarz też baba',
+            'author': "kacper",
+            'datetime': str(datetime.datetime.now())
         })
     return redirect('/')

@@ -4,7 +4,8 @@ from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import InputRequired, Length
 from flask_bcrypt import Bcrypt
 from flask_login import login_user, LoginManager, login_required, logout_user, current_user
-from db.user_db import db, User
+from db.user_db import db
+from model.User import User
 
 auth = Blueprint('auth', __name__, template_folder='templates',
                  static_folder='static')
@@ -61,11 +62,14 @@ def register():
     form = RegisterForm()
 
     if form.validate_on_submit():
-        hashed_password = bcrypt.generate_password_hash(form.password.data)
-        new_user = User(username=form.username.data, password=hashed_password)
-        db.session.add(new_user)
-        db.session.commit()
-        return redirect(url_for('auth.login'))
+        if User.query.filter_by(username=form.username.data).first() is None:
+            hashed_password = bcrypt.generate_password_hash(form.password.data)
+            new_user = User(username=form.username.data, password=hashed_password)
+            db.session.add(new_user)
+            db.session.commit()
+            return redirect(url_for('auth.login'))
+        else:
+            return render_template('register.html', form=form)
 
     return render_template('register.html', form=form)
 
@@ -74,7 +78,7 @@ def register():
 @login_required
 def logout():
     logout_user()
-    return redirect(url_for('auth.login'))
+    return redirect('/')
 
 
 

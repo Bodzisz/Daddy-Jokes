@@ -14,8 +14,8 @@
     </div>
     <div>
         <ul>
-            {% for student in students %}
-                <li>{{ student['first_name'] }}  {{ student['last_name'] }}  {{ student['index'] }}</li>
+            {% for joke in jokes %}
+                <li>{{ joke['name'] }}  {{ joke['content'] }}  {{ joke['author'] }} {{ joke['datetime'] }}</li>
             {% endfor %}
         </ul>
     </div>
