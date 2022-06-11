@@ -22,8 +22,9 @@ class AddJokeForm(FlaskForm):
     submit = SubmitField("Add")
 
 
-@login_required
+
 @jokes.route('/add', methods=['GET', 'POST'])
+@login_required
 def add_joke():
     form = AddJokeForm()
 
@@ -39,8 +40,9 @@ def add_joke():
     return render_template('add-joke.html', form=form)
 
 
-@login_required
+
 @jokes.route('/delete/<joke_id>')
+@login_required
 def delete_joke(joke_id):
     selected_joke = jokes_collection.find_one({"_id": ObjectId(joke_id)})
     if selected_joke is not None:

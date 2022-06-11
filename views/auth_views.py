@@ -13,7 +13,7 @@ auth = Blueprint('auth', __name__, template_folder='templates',
 bcrypt = Bcrypt()
 
 login_manager = LoginManager()
-login_manager.login_view = "login"
+login_manager.login_view = "auth.login"
 
 
 class RegisterForm(FlaskForm):
