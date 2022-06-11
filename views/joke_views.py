@@ -17,7 +17,8 @@ class AddJokeForm(FlaskForm):
     name = StringField(validators=[InputRequired(), Length(
         min=2, max=30)], render_kw={"placeholder": "Joke name"})
 
-    content = TextAreaField(render_kw={"placeholder": "Joke content"})
+    content = TextAreaField(render_kw={"placeholder": "Joke content"}, validators=[InputRequired(), Length(
+        min=2, max=30)])
 
     submit = SubmitField("Add")
 
@@ -55,12 +56,14 @@ def delete_joke(joke_id):
 
 @jokes.route("/")
 def joke_list():
+    username = current_user.username if current_user.is_authenticated else None
+    is_authenticated = current_user.is_authenticated
     author = request.args.get('author', None)
     if author is None:
         jokes_list = jokes_collection.find()
     else:
         jokes_list = jokes_collection.find({"author": author})
-    return render_template("list.html", jokes=jokes_list)
+    return render_template("list.html", jokes=jokes_list, username=username, is_authenticated=is_authenticated)
 
 
 @jokes.route("/<joke_id>")
