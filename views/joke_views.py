@@ -18,7 +18,7 @@ class AddJokeForm(FlaskForm):
         min=2, max=30)], render_kw={"placeholder": "Joke name"})
 
     content = TextAreaField(render_kw={"placeholder": "Joke content"}, validators=[InputRequired(), Length(
-        min=2, max=30)])
+        min=2)])
 
     submit = SubmitField("Add")
 

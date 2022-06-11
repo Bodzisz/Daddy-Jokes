@@ -65,6 +65,10 @@ footer {
     transform: translatex(-50%);
 }
 
+.textarea-endlines {
+    white-space: pre-wrap;
+}
+
 body {
   /* fallback for old browsers */
   background: #a18cd1;
