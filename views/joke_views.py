@@ -53,7 +53,7 @@ def delete_joke(joke_id):
         return abort(404)
 
 
-@jokes.route("/list")
+@jokes.route("/")
 def joke_list():
     author = request.args.get('author', None)
     if author is None:
@@ -61,3 +61,12 @@ def joke_list():
     else:
         jokes_list = jokes_collection.find({"author": author})
     return render_template("list.html", jokes=jokes_list)
+
+
+@jokes.route("/<joke_id>")
+def joke(joke_id):
+    selected_joke = jokes_collection.find_one({"_id": ObjectId(joke_id)})
+    if selected_joke is not None:
+        return render_template("joke.html", joke=selected_joke)
+    else:
+        return abort(404)

@@ -56,9 +56,16 @@
     <div class="container">
         <ul class="list-unstyled list-group">
             {% for joke in jokes %}
-                <li class="list-group-item">
-                    <b>{{ joke['name'] }}</b> <br>  {{ joke['content'] }} <br>  <span>{{ joke['author'] }} {{ joke['datetime'] }}</span>
-                </li>
+                <a href="{{url_for('jokes.joke_list')}}/{{joke['_id']}}" class="text-decoration-none text-dark">
+                    <li class="list-group-item">
+                        <div class="joke-list-item">
+                            <b>{{ joke['name'] }}</b> <br>  {{ joke['content'] }}
+                        </div>
+                        <div class="text-secondary pt-1">
+                            <span>{{ joke['author'] }} {{ joke['datetime'] }}</span>
+                        </div>
+                    </li>
+                </a>
             {% endfor %}
         </ul>
     </div>
