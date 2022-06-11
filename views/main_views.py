@@ -21,10 +21,3 @@ def get_random_joke():
     rand = randrange(jokes_collection.count_documents({}))
     return jokes_collection.find()[rand]
 
-
-@main.route("/dashboard")
-@login_required
-def dashboard():
-    username = current_user.username
-    return render_template("dashboard.html", username=username)
-

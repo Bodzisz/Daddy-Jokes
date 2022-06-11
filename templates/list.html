@@ -65,7 +65,7 @@
 
 
     <div class="container">
-        <ul class="list-unstyled list-group">
+        <ul class="list-unstyled list-group pt-3">
             {% for joke in jokes %}
                 <a href="{{url_for('jokes.joke_list')}}/{{joke['_id']}}" class="text-decoration-none text-dark">
                     <li class="list-group-item">

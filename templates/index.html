@@ -24,8 +24,13 @@
             <a class="nav-link grow" href="/">Home <span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item grow pr-3">
-            <a class="nav-link" href="{{ url_for('jokes.joke_list') }}">Jokes</a>
+            <a class="nav-link" href="{{ url_for('jokes.joke_list') }}">All Jokes</a>
           </li>
+            {% if is_authenticated %}
+            <li class="nav-item grow pr-3">
+                <a class="nav-link" href="{{ url_for('jokes.joke_list') }}/?author={{ username }}">My Jokes</a>
+            </li>
+            {% endif %}
           <li class="nav-item grow px-3">
             <a class="nav-link" href="{{ url_for('jokes.add_joke') }}">Add joke</a>
           </li>
@@ -78,7 +83,7 @@
                 </div>
             </div>
             <div class="col-6 pt-5 text-center font-italic">
-                <div class="text-right">
+                <div class="text-right text-dark">
                     <h1>Welcome to DaddyJokes!</h1>
                     <img src="../static/dad.png" class="img-fluid" alt="Responsive image">
                 </div>

@@ -54,7 +54,7 @@ def login():
             if user:
                 if bcrypt.check_password_hash(user.password, form.password.data):
                     login_user(user)
-                    return redirect(url_for('view.dashboard'))
+                    return redirect(url_for('view.home'))
             return render_template('login.html', form=form, password_error=True)
         return render_template('login.html', form=form)
     else:
