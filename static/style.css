@@ -42,7 +42,44 @@ footer {
    -webkit-box-orient: vertical;
 }
 
+.random-joke {
+    overflow: hidden;
+   text-overflow: ellipsis;
+   display: -webkit-box;
+   -webkit-line-clamp: 15; /* number of lines to show */
+           line-clamp: 15;
+   -webkit-box-orient: vertical;
+}
+
 .clear { clear: both; height: 60px; }
+
+.navbar-nav.navbar-center {
+    position: absolute;
+    left: 50%;
+    transform: translatex(-50%);
+}
+
+.navbar-nav.navbar-right {
+    position: absolute;
+    left: 90%;
+    transform: translatex(-50%);
+}
+
+body {
+  /* fallback for old browsers */
+  background: #a18cd1;
+
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: -webkit-linear-gradient(to right, rgba(161, 140, 209, 0.5), rgba(251, 194, 235, 0.5));
+
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background: linear-gradient(to right, rgba(161, 140, 209, 0.5), rgba(251, 194, 235, 0.5))
+}
+
+.navbar-custom {
+  height: 70px;
+}
+
 /*.navbar-collapse.in {*/
 /*    display: block !important;*/
 /*}*/
