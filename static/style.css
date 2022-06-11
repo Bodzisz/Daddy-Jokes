@@ -13,6 +13,14 @@ body {
     transform: scale(1.4);
 }
 
+.divider:after,
+.divider:before {
+content: "";
+flex: 1;
+height: 1px;
+background: #eee;
+}
+
 /*.navbar-collapse.in {*/
 /*    display: block !important;*/
 /*}*/

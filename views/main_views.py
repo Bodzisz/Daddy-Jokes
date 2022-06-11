@@ -16,8 +16,8 @@ def home():
     return render_template('index.html', username=username, is_authenticated=is_authenticated)
 
 
-@main.route("/dashboard")
 @login_required
+@main.route("/dashboard")
 def dashboard():
     username = current_user.username
     return render_template("dashboard.html", username=username)
