@@ -22,7 +22,6 @@ class AddJokeForm(FlaskForm):
     submit = SubmitField("Add")
 
 
-
 @jokes.route('/add', methods=['GET', 'POST'])
 @login_required
 def add_joke():
@@ -38,7 +37,6 @@ def add_joke():
             })
         return redirect(url_for('jokes.joke_list'))
     return render_template('add-joke.html', form=form)
-
 
 
 @jokes.route('/delete/<joke_id>')

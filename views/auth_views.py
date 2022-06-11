@@ -68,14 +68,14 @@ def register():
     if form.validate_on_submit():
         if User.query.filter_by(username=form.username.data).first() is None:
             if form.password_confirm.data != form.password.data:
-                return render_template('register.html', form=form)
+                return render_template('register.html', form=form, password_match=False)
             hashed_password = bcrypt.generate_password_hash(form.password.data)
             new_user = User(username=form.username.data, password=hashed_password)
             db.session.add(new_user)
             db.session.commit()
             return redirect(url_for('auth.login'))
         else:
-            return render_template('register.html', form=form)
+            return render_template('register.html', form=form, username_exists=True)
 
     return render_template('register.html', form=form)
 
