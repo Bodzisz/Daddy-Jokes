@@ -21,6 +21,15 @@ height: 1px;
 background: #eee;
 }
 
+footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: auto;
+    width: 100vw;
+}
+
 /*.navbar-collapse.in {*/
 /*    display: block !important;*/
 /*}*/
