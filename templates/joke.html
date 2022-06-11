@@ -86,8 +86,19 @@
                     {{ joke['content'] }}
                 </p>
             </div>
-            <div class="container text-secondary pb-3">
-                <span>{{ joke['author'] }} {{ joke['datetime'] }}</span>
+            <div class="row">
+                <div class="col-10 text-secondary pb-3">
+                    <span>{{ joke['author'] }} {{ joke['datetime'] }}</span>
+                </div>
+                {% if joke['author'] == username %}
+                <div class="col-2">
+                <a href="{{ url_for('jokes.joke_list') }}/delete/{{ joke['_id'] }}">
+                    <button class="btn btn-danger">
+                        Delete
+                    </button>
+                </a>
+                </div>
+                {% endif %}
             </div>
         </div>
     </div>

@@ -68,8 +68,9 @@ def joke_list():
 
 @jokes.route("/<joke_id>")
 def joke(joke_id):
+    username = current_user.username if current_user.is_authenticated else None
     selected_joke = jokes_collection.find_one({"_id": ObjectId(joke_id)})
     if selected_joke is not None:
-        return render_template("joke.html", joke=selected_joke)
+        return render_template("joke.html", joke=selected_joke, username=username)
     else:
         return abort(404)

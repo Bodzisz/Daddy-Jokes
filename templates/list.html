@@ -75,11 +75,22 @@
                         <div class="text-secondary pt-1">
                             <span>{{ joke['author'] }} {{ joke['datetime'] }}</span>
                         </div>
+                        {% if joke['author'] == username %}
+                        <div>
+                        <a href="{{ url_for('jokes.joke_list') }}/delete/{{ joke['_id'] }}">
+                            <button class="btn btn-danger mt-1">
+                                Delete
+                            </button>
+                        </a>
+                        </div>
+                        {% endif %}
                     </li>
                 </a>
             {% endfor %}
         </ul>
     </div>
+
+    <div class="clear"></div>
 
     <footer class="bg-dark text-center text-lg-start text-white">
         <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
