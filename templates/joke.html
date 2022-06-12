@@ -87,11 +87,29 @@
                 </p>
             </div>
             <div class="row">
-                <div class="col-10 text-secondary pb-3">
+                <div class="col-8 text-secondary pb-3">
                     <span>{{ joke['author'] }} {{ joke['datetime'] }}</span>
                 </div>
+                <div class="col-4">
+                    <div class="row">
+                        <div class="col-6">
+                            <h5 class="text-dark font-weight-bolder text- float-right mt-2">
+                                {{ likes }}
+                            </h5>
+                        </div>
+                        <div class="col-6 float-left">
+                            <a href="{{ url_for("jokes.joke_list") }}/toggle/{{ joke["_id"] }}">
+                                {%  if user_liked %}
+                                <img src="/static/thumbs-up-solid.svg" class="filter-blue" style="height: 40px; width: 40px;"/>
+                                {%  else %}
+                                <img src="/static/thumbs-up-solid.svg" style="height: 40px; width: 40px;"/>
+                                {%  endif %}
+                            </a>
+                        </div>
+                    </div>
+                </div>
                 {% if joke['author'] == username %}
-                <div class="col-2">
+                <div class="container">
                 <a href="{{ url_for('jokes.joke_list') }}/delete/{{ joke['_id'] }}" class="text-decoration-none" onclick="return confirm('Are you sure you want to delete that joke?')">
                     <button class="btn btn-danger">
                         Delete

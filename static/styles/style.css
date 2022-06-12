@@ -83,3 +83,7 @@ body {
 .navbar-custom {
   height: 70px;
 }
+
+.filter-blue {
+    filter: invert(9%) sepia(100%) saturate(7256%) hue-rotate(248deg) brightness(89%) contrast(145%);
+}

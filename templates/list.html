@@ -19,7 +19,7 @@
       </button>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav navbar-center mr-auto justify-content-center">
+        <ul class="navbar-nav navbar-center mr-auto justify-content-center ml-5">
           <li class="nav-item active pr-3 pl-5">
             <a class="nav-link grow" href="/">Home <span class="sr-only">(current)</span></a>
           </li>
@@ -77,8 +77,30 @@
                         <div class="joke-list-item">
                             <b>{{ joke['name'] }}</b> <br>  {{ joke['content'] }}
                         </div>
-                        <div class="text-secondary pt-1">
-                            <span>{{ joke['author'] }} {{ joke['datetime'] }}</span>
+                        <div class="text-secondary pt-2">
+                            <div class="row">
+                                <div class="col-xl-12">
+                                    <span>{{ joke['author'] }} {{ joke['datetime'] }}</span>
+                                </div>
+                                <div class="col-4">
+                                     <div class="row float-right">
+                                        <div class="col-6 float-right">
+                                            <p class="text-dark font-weight-bolder text- float-right mt-1">
+                                                {{ joke['likes']|length }}
+                                            </p>
+                                        </div>
+                                        <div class="col-6 float-left">
+                                            <a href="{{ url_for("jokes.joke_list") }}/toggle/{{ joke["_id"] }}?from_list=true">
+                                                {%  if username in joke['likes'] %}
+                                                <img src="/static/thumbs-up-solid.svg" class="filter-blue" style="height: 20px; width: 20px;"/>
+                                                {%  else %}
+                                                <img src="/static/thumbs-up-solid.svg" style="height: 20px; width: 20px;"/>
+                                                {%  endif %}
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         {% if joke['author'] == username %}
                         <div>

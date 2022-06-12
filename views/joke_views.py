@@ -85,8 +85,12 @@ def filter_jokes(full_joke_list, field, value):
 def joke(joke_id):
     username = current_user.username if current_user.is_authenticated else None
     selected_joke = jokes_collection.find_one({"_id": ObjectId(joke_id)})
+    likes = len(selected_joke['likes'])
+    user_liked = True if username in selected_joke['likes'] else False
     if selected_joke is not None:
-        return render_template("joke.html", joke=selected_joke, username=username, is_authenticated=current_user.is_authenticated)
+        return render_template("joke.html", joke=selected_joke, username=username,
+                               is_authenticated=current_user.is_authenticated,
+                               likes=likes, user_liked=user_liked)
     else:
         return abort(404)
 
@@ -130,3 +134,35 @@ def edit_joke(joke_id):
             abort(403)
     else:
         return abort(404)
+
+
+@jokes.route("/toggle/<joke_id>")
+@login_required
+def joke_like_toggle(joke_id):
+    selected_joke = jokes_collection.find_one({"_id": ObjectId(joke_id)})
+    username = current_user.username
+    if username in selected_joke['likes']:
+        selected_joke['likes'].remove(username)
+        user_liked = False
+    else:
+        user_liked = True
+        selected_joke['likes'].append(username)
+    jokes_collection.update_one(
+        {
+            '_id': ObjectId(joke_id)
+        },
+        {
+            "$set": {
+                'likes': selected_joke['likes']
+            }
+        },
+        upsert=False
+    )
+    from_list = request.args.get('from_list', None)
+    if from_list is None:
+        return render_template("joke.html", joke=selected_joke, username=username, is_authenticated=True,
+                               likes=len(selected_joke['likes']), user_liked=user_liked)
+    else:
+        jokes_list = jokes_collection.find()
+        return render_template("list.html", jokes=jokes_list, username=username, is_authenticated=True,
+                               likes=len(selected_joke['likes']))
