@@ -92,9 +92,9 @@
                                         <div class="col-6 float-left">
                                             <a href="{{ url_for("jokes.joke_list") }}/toggle/{{ joke["_id"] }}?from_list=true">
                                                 {%  if username in joke['likes'] %}
-                                                <img src="/static/thumbs-up-solid.svg" class="filter-blue" style="height: 20px; width: 20px;"/>
+                                                <img src="/static/images/thumbs-up-solid.svg" class="filter-blue" style="height: 20px; width: 20px;"/>
                                                 {%  else %}
-                                                <img src="/static/thumbs-up-solid.svg" style="height: 20px; width: 20px;"/>
+                                                <img src="/static/images/thumbs-up-solid.svg" style="height: 20px; width: 20px;"/>
                                                 {%  endif %}
                                             </a>
                                         </div>
