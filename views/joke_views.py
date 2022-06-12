@@ -61,17 +61,11 @@ def joke_list():
 
     jokes_list = jokes_collection.find()
 
-    author = request.args.get('author', None)
-    if author is not None:
-        jokes_list = filter_jokes(jokes_list, "author", author)
-
-    name = request.args.get('name', None)
-    if name is not None:
-        jokes_list = filter_jokes(jokes_list, "name", name)
-
-    content = request.args.get('content', None)
-    if content is not None:
-        jokes_list = filter_jokes(jokes_list, "content", content)
+    valid_args = ['author', 'name', 'content']
+    args = request.args
+    for arg in args:
+        if arg in valid_args:
+            jokes_list = filter_jokes(jokes_list, arg, args[arg])
 
     return render_template("list.html", jokes=jokes_list, username=username, is_authenticated=is_authenticated)
 
