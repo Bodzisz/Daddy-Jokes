@@ -67,6 +67,8 @@ def joke_list():
         if arg in valid_args:
             jokes_list = filter_jokes(jokes_list, arg, args[arg])
 
+    jokes_list = sorted(jokes_list, key=lambda joke: joke['datetime'], reverse=True)
+
     return render_template("list.html", jokes=jokes_list, username=username, is_authenticated=is_authenticated)
 
 
