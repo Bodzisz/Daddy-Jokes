@@ -77,9 +77,14 @@
                         </div>
                         {% if joke['author'] == username %}
                         <div>
-                        <a href="{{ url_for('jokes.joke_list') }}/delete/{{ joke['_id'] }}">
+                        <a href="{{ url_for('jokes.joke_list') }}/delete/{{ joke['_id'] }}" onclick="return confirm('Are you sure you want to delete that joke?')">
                             <button class="btn btn-danger mt-1">
                                 Delete
+                            </button>
+                        </a>
+                        <a href="#" class="text-decoration-none">
+                            <button class="btn btn-primary mt-1">
+                                Edit
                             </button>
                         </a>
                         </div>
