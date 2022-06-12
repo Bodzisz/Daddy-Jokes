@@ -58,12 +58,30 @@ def delete_joke(joke_id):
 def joke_list():
     username = current_user.username if current_user.is_authenticated else None
     is_authenticated = current_user.is_authenticated
+
+    jokes_list = jokes_collection.find()
+
     author = request.args.get('author', None)
-    if author is None:
-        jokes_list = jokes_collection.find()
-    else:
-        jokes_list = jokes_collection.find({"author": author})
+    if author is not None:
+        jokes_list = filter_jokes(jokes_list, "author", author)
+
+    name = request.args.get('name', None)
+    if name is not None:
+        jokes_list = filter_jokes(jokes_list, "name", name)
+
+    content = request.args.get('content', None)
+    if content is not None:
+        jokes_list = filter_jokes(jokes_list, "content", content)
+
     return render_template("list.html", jokes=jokes_list, username=username, is_authenticated=is_authenticated)
+
+
+def filter_jokes(full_joke_list, field, value):
+    filtred = []
+    for single_joke in full_joke_list:
+        if value.lower() in single_joke[field].lower():
+            filtred.append(single_joke)
+    return filtred
 
 
 @jokes.route("/<joke_id>")
@@ -74,3 +92,12 @@ def joke(joke_id):
         return render_template("joke.html", joke=selected_joke, username=username)
     else:
         return abort(404)
+
+
+@jokes.route("/search", methods=['GET', 'POST'])
+def search():
+    select = request.form.get('search_select', None)
+    value = request.form.get('value', None)
+    if value == "":
+        return redirect(url_for('jokes.joke_list'))
+    return redirect(url_for('jokes.joke_list') + '/?' + select + '=' + value)
