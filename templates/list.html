@@ -63,6 +63,8 @@
             <option value="content">Content</option>
           </select>
           <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" name="value" id="value">
+          <input type="hidden" name="sorting" value="{{ request.args.get('sorting', None) }}">
+            <input type="hidden" name="descending" value="{{ request.args.get('descending', None) }}">
           <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
         </form>
       </div>
@@ -70,6 +72,29 @@
 
 
     <div class="container">
+        <form method="post" action="{{ url_for("jokes.sort") }}">
+            <p class="d-inline-flex">Sorting:</p>
+            <div class="form-check form-check-inline p-2">
+              <input class="form-check-input" type="radio" name="sorting" id="date" value="date">
+              <label class="form-check-label" for="flexRadioDefault1">
+                Date
+              </label>
+            </div>
+            <div class="form-check form-check-inline p-2">
+              <input class="form-check-input" type="radio" name="sorting" id="likes" value="likes" checked>
+              <label class="form-check-label" for="flexRadioDefault2">
+                Likes
+              </label>
+            </div>
+            <div class="form-check form-switch form-check-inline p-2">
+              <input class="form-check-input" type="checkbox" id="descending" value="True" name="descending">
+              <label class="form-check-label" for="flexSwitchCheckDefault">Descending</label>
+            </div>
+            <input type="hidden" name="name_search" value="{{ request.args.get('name', None) }}">
+            <input type="hidden" name="author_search" value="{{ request.args.get('author', None) }}">
+            <input type="hidden" name="content_search" value="{{ request.args.get('content', None) }}">
+            <button class="btn btn-success" type="submit">Apply</button>
+        </form>
         <ul class="list-unstyled list-group pt-3">
             {% for joke in jokes %}
                 <a href="{{url_for('jokes.joke_list')}}/{{joke['_id']}}" class="text-decoration-none text-dark">

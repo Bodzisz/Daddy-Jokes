@@ -68,7 +68,9 @@ def joke_list():
         if arg in valid_args:
             jokes_list = filter_jokes(jokes_list, arg, args[arg])
 
-    jokes_list = sorted(jokes_list, key=lambda joke: joke['datetime'], reverse=True)
+    sorting = args.get('sorting', None)
+    descending = args.get('descending', False)
+    jokes_list = sort_jokes(jokes_list, sorting, descending)
 
     return render_template("list.html", jokes=jokes_list, username=username, is_authenticated=is_authenticated)
 
@@ -79,6 +81,22 @@ def filter_jokes(full_joke_list, field, value):
         if value.lower() in single_joke[field].lower():
             filtred.append(single_joke)
     return filtred
+
+
+def sort_jokes(full_jokes_list, sorting, descending):
+    result = []
+    if sorting is not None:
+        if descending == 'False':
+            descending = False
+        else:
+            descending = True
+        if sorting == 'date':
+            result = sorted(full_jokes_list, key=lambda joke: joke['datetime'], reverse=descending)
+        elif sorting == 'likes':
+            result = sorted(full_jokes_list, key=lambda joke: len(joke['likes']), reverse=descending)
+    else:
+        result = sorted(full_jokes_list, key=lambda joke: joke['datetime'], reverse=True)
+    return result
 
 
 @jokes.route("/<joke_id>")
@@ -99,9 +117,16 @@ def joke(joke_id):
 def search():
     select = request.form.get('search_select', None)
     value = request.form.get('value', None)
+    sorting = request.form.get('sorting', None)
+    descending = request.form.get('descending', 'False')
+    args_string = "?"
+    for key, text in [('sorting', sorting), ('descending', descending)]:
+        if value != 'None':
+            args_string += key + "=" + text + "&"
+
     if value == "":
-        return redirect(url_for('jokes.joke_list'))
-    return redirect(url_for('jokes.joke_list') + '/?' + select + '=' + value)
+        return redirect(url_for('jokes.joke_list') + args_string)
+    return redirect(url_for('jokes.joke_list') + '/?' + args_string + select + '=' + value)
 
 
 @jokes.route("/edit/<joke_id>", methods=['GET', 'POST'])
@@ -166,3 +191,17 @@ def joke_like_toggle(joke_id):
         jokes_list = jokes_collection.find()
         return render_template("list.html", jokes=jokes_list, username=username, is_authenticated=True,
                                likes=len(selected_joke['likes']))
+
+
+@jokes.route("/sort", methods=["POST"])
+def sort():
+    sorting = request.form.get('sorting', None)
+    descending = request.form.get('descending', 'False')
+    name_search = request.form.get('name_search', None)
+    author_search = request.form.get('author_search', None)
+    content_search = request.form.get('content_search', None)
+    args_string = '?'
+    for key, value in [('name', name_search), ('author', author_search), ('content', content_search)]:
+        if value != 'None':
+            args_string += key + '=' + value + "&"
+    return redirect(url_for('jokes.joke_list') + '/' + args_string + 'sorting=' + sorting + '&descending=' + descending)
