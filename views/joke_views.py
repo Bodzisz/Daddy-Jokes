@@ -34,7 +34,8 @@ def add_joke():
                 'name': form.name.data,
                 'content': form.content.data,
                 'author': current_user.username,
-                'datetime': str(datetime.datetime.now())
+                'datetime': str(datetime.datetime.now()),
+                'likes': []
             })
         return redirect(url_for('jokes.joke_list'))
     return render_template('add-joke.html', form=form)
@@ -85,7 +86,7 @@ def joke(joke_id):
     username = current_user.username if current_user.is_authenticated else None
     selected_joke = jokes_collection.find_one({"_id": ObjectId(joke_id)})
     if selected_joke is not None:
-        return render_template("joke.html", joke=selected_joke, username=username)
+        return render_template("joke.html", joke=selected_joke, username=username, is_authenticated=current_user.is_authenticated)
     else:
         return abort(404)
 
@@ -97,3 +98,35 @@ def search():
     if value == "":
         return redirect(url_for('jokes.joke_list'))
     return redirect(url_for('jokes.joke_list') + '/?' + select + '=' + value)
+
+
+@jokes.route("/edit/<joke_id>", methods=['GET', 'POST'])
+@login_required
+def edit_joke(joke_id):
+    selected_joke = jokes_collection.find_one({"_id": ObjectId(joke_id)})
+    if selected_joke is not None:
+        if selected_joke['author'] == current_user.username:
+            form = AddJokeForm()
+
+            if form.validate_on_submit():
+                jokes_collection.update_one(
+                    {
+                        '_id': ObjectId(joke_id)
+                    },
+                    {
+                        "$set": {
+                            'name': form.name.data,
+                            'content': form.content.data,
+                        }
+                    },
+                    upsert=False
+                )
+                return redirect(url_for('jokes.joke_list') + "/" + str(selected_joke['_id']))
+            form.name.data = selected_joke['name']
+            form.content.data = selected_joke['content']
+            form.submit.label.text = "Edit"
+            return render_template('add-joke.html', form=form)
+        else:
+            abort(403)
+    else:
+        return abort(404)

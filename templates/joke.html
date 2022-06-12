@@ -97,7 +97,7 @@
                         Delete
                     </button>
                 </a>
-                <a href="#" class="text-decoration-none">
+                <a href="{{ url_for('jokes.joke_list') }}/edit/{{ joke['_id'] }}" class="text-decoration-none">
                     <button class="btn btn-primary">
                         Edit
                     </button>
