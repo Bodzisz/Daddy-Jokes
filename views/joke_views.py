@@ -74,11 +74,11 @@ def joke_list():
     descending = args.get('descending', False)
     jokes_list = sort_jokes(jokes_list, sorting, descending)
 
-    page = request.args.get(get_page_parameter(), type=int, default=1)
-    per_page = Config.PER_PAGE
-    total = len(jokes_list)
-    jokes_list = jokes_list[(page-1)*per_page:page*per_page]
-    pagination = Pagination(page=page, total=total, per_page=per_page, record_name='jokes')
+    pagination, jokes_list = get_pagination(jokes_list)
+
+    for joke in jokes_list:
+        datetime_obj = datetime.datetime.strptime(joke['datetime'], '%Y-%m-%d %H:%M:%S.%f')
+        joke['datetime'] = str(datetime_obj.strftime("%Y-%m-%d %H:%M"))
 
     return render_template("list.html", jokes=jokes_list, username=username, is_authenticated=is_authenticated,
                            pagination=pagination)
@@ -106,6 +106,15 @@ def sort_jokes(full_jokes_list, sorting, descending):
     else:
         result = sorted(full_jokes_list, key=lambda joke: joke['datetime'], reverse=True)
     return result
+
+
+def get_pagination(jokes_full_list):
+    page = request.args.get(get_page_parameter(), type=int, default=1)
+    per_page = Config.PER_PAGE
+    total = len(jokes_full_list)
+    jokes_full_list = jokes_full_list[(page - 1) * per_page:page * per_page]
+    pagination = Pagination(page=page, total=total, per_page=per_page, record_name='jokes')
+    return pagination, jokes_full_list
 
 
 @jokes.route("/<joke_id>")
@@ -198,8 +207,10 @@ def joke_like_toggle(joke_id):
                                likes=len(selected_joke['likes']), user_liked=user_liked)
     else:
         jokes_list = jokes_collection.find()
+        jokes_list = sort_jokes(jokes_list, request.args.get('sorting', None), request.args.get('descending', False))
+        pagination, jokes_list = get_pagination(jokes_list)
         return render_template("list.html", jokes=jokes_list, username=username, is_authenticated=True,
-                               likes=len(selected_joke['likes']))
+                               likes=len(selected_joke['likes']), pagination=pagination)
 
 
 @jokes.route("/sort", methods=["POST"])
