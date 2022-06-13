@@ -7,12 +7,22 @@ class Config(object):
     DEBUG = True
     TESTING = True
     ENV = DEVELOPMENT
-    # MONGO_URI = 'mongodb+srv://kacper_wojcicki:polskagurom@cluster0.wyaxf.mongodb.net/test_db?retryWrites=true&w=majority'
+    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://flaskapp:password@mysql:3306/users'
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
+    PER_PAGE = 10
+
+
+class ProductionConfig(object):
+    DEVELOPMENT = False
+    DEBUG = False
+    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://flaskapp:password@mysql:3306/users'
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
+    PER_PAGE = 10
+
+
+class MongoConfig(object):
     MONGO_HOST = 'mongo'
     MONGO_PORT = 27017
     MONGO_USERNAME = 'flaskapp'
     MONGO_PASSWORD = 'password'
     MONGO_DB_NAME = 'test'
-    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://flaskapp:password@mysql:3306/users'
-    SQLALCHEMY_TRACK_MODIFICATIONS = False
-    PER_PAGE = 10
