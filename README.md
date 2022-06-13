@@ -13,6 +13,7 @@ docker-compose up
 - Joke search
 - Joke sorting
 - Likes
+- Pagination
 - Random Joke on landing page  
 - Very unfunny jokes
 ### 3. Technology Stack ###
