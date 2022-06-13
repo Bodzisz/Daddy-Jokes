@@ -75,20 +75,28 @@
         <form method="post" action="{{ url_for("jokes.sort") }}">
             <p class="d-inline-flex">Sorting:</p>
             <div class="form-check form-check-inline p-2">
-              <input class="form-check-input" type="radio" name="sorting" id="date" value="date">
+              <input class="form-check-input" type="radio" name="sorting" id="date" value="date" checked>
               <label class="form-check-label" for="flexRadioDefault1">
                 Date
               </label>
             </div>
             <div class="form-check form-check-inline p-2">
-              <input class="form-check-input" type="radio" name="sorting" id="likes" value="likes" checked>
+              <input class="form-check-input" type="radio" name="sorting" id="likes" value="likes">
               <label class="form-check-label" for="flexRadioDefault2">
                 Likes
               </label>
             </div>
-            <div class="form-check form-switch form-check-inline p-2">
-              <input class="form-check-input" type="checkbox" id="descending" value="True" name="descending">
-              <label class="form-check-label" for="flexSwitchCheckDefault">Descending</label>
+            <div class="form-check form-check-inline p-2">
+              <input class="form-check-input" type="radio" name="descending" id="likes" value="False" checked>
+              <label class="form-check-label" for="flexRadioDefault2">
+                Ascending
+              </label>
+            </div>
+            <div class="form-check form-check-inline p-2">
+              <input class="form-check-input" type="radio" name="descending" id="likes" value="True">
+              <label class="form-check-label" for="flexRadioDefault2">
+                Descending
+              </label>
             </div>
             <input type="hidden" name="name_search" value="{{ request.args.get('name', None) }}">
             <input type="hidden" name="author_search" value="{{ request.args.get('author', None) }}">

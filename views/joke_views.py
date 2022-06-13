@@ -196,7 +196,7 @@ def joke_like_toggle(joke_id):
 @jokes.route("/sort", methods=["POST"])
 def sort():
     sorting = request.form.get('sorting', None)
-    descending = request.form.get('descending', 'False')
+    descending = request.form.get('descending', None)
     name_search = request.form.get('name_search', None)
     author_search = request.form.get('author_search', None)
     content_search = request.form.get('content_search', None)
