@@ -15,3 +15,4 @@ class Config(object):
     MONGO_DB_NAME = 'test'
     SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://flaskapp:password@mysql:3306/users'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+    PER_PAGE = 10

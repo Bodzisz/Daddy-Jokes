@@ -5,6 +5,8 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, TextAreaField, SubmitField
 from wtforms.validators import InputRequired, Length
 from db.mongo_db import mongo
+from flask_paginate import Pagination, get_page_parameter
+from config.configurations import Config
 import datetime
 
 jokes = Blueprint('jokes', __name__, template_folder='templates',
@@ -72,7 +74,14 @@ def joke_list():
     descending = args.get('descending', False)
     jokes_list = sort_jokes(jokes_list, sorting, descending)
 
-    return render_template("list.html", jokes=jokes_list, username=username, is_authenticated=is_authenticated)
+    page = request.args.get(get_page_parameter(), type=int, default=1)
+    per_page = Config.PER_PAGE
+    total = len(jokes_list)
+    jokes_list = jokes_list[(page-1)*per_page:page*per_page]
+    pagination = Pagination(page=page, total=total, per_page=per_page, record_name='jokes')
+
+    return render_template("list.html", jokes=jokes_list, username=username, is_authenticated=is_authenticated,
+                           pagination=pagination)
 
 
 def filter_jokes(full_joke_list, field, value):

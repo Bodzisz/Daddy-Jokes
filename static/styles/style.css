@@ -28,6 +28,7 @@ footer {
     right: 0;
     height: auto;
     width: 100vw;
+    z-index: 999;
 }
 
 .joke-list-item {
@@ -86,4 +87,20 @@ body {
 
 .filter-blue {
     filter: invert(9%) sepia(100%) saturate(7256%) hue-rotate(248deg) brightness(89%) contrast(145%);
+}
+
+.pagination-page-info {
+    padding: .6em;
+    padding-left: 0;
+    width: 40em;
+    margin: .5em;
+    margin-left: 0;
+    font-size: 12px;
+}
+.pagination-page-info b {
+    color: black;
+    background: #6aa6ed;
+    padding-left: 2px;
+    padding: .1em .25em;
+    font-size: 150%;
 }
