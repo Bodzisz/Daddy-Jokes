@@ -73,7 +73,9 @@
                     Random Joke
                     </h1>
                 </div>
+                {% if random_joke != None %}
                 <a href="{{url_for('jokes.joke_list')}}/{{ random_joke['_id']}}" class="text-decoration-none text-dark">
+                {% endif %}
                 <div class="text-justify display-5 border border-dark rounded p-5 bg-dark">
                     <div class="random-joke font-italic font-weight-normal text-white">
                         {% if random_joke != None %}

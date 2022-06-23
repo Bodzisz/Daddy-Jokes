@@ -18,6 +18,9 @@ def home():
 
 
 def get_random_joke():
-    rand = randrange(jokes_collection.count_documents({}))
+    try:
+        rand = randrange(jokes_collection.count_documents({}))
+    except ValueError:
+        return None
     return jokes_collection.find()[rand]
 
