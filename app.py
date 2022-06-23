@@ -5,11 +5,16 @@ from db.user_db import db
 from views.auth_views import bcrypt, login_manager
 from views.main_views import main as main_blueprint
 from views.joke_views import jokes as jokes_blueprint
+from db.mongo_db import mongo_client
+from config.configurations import MongoConfig
 
 
 def create_app():
     app = Flask(__name__)
     app.config.from_object(configurations.Config)
+
+    if MongoConfig.MONGO_DB_NAME not in mongo_client.list_database_names():
+        mongo_client[MongoConfig.MONGO_DB_NAME]
 
     bcrypt.init_app(app)
     db.init_app(app)
