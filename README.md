@@ -1,11 +1,15 @@
 # Daddy-Jokes
-Daddy-Jokes is a flask CRUD application where you can find some unfunny, silly jokes.
+Daddy-Jokes is a flask CRUD application where you can manage some unfunny, silly jokes.
 
 ### 1. Setup ###
 To run the app locally you need to have docker installed on your computer.
 Then you just need to run compose up in the project directory:
 ````
 docker-compose up --build
+````
+If you are on mac with apple silicon (arm) chip, there is an alterntive docker-compose file:
+````
+docker-compose -f docker-compose-arm.yml up --build
 ````
 ### 2. Features ###
 - Jokes CRUD (create, read, update, delete)
