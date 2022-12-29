@@ -7,7 +7,7 @@ Then you just need to run compose up in the project directory:
 ````
 docker-compose up --build
 ````
-If you are on mac with apple silicon (arm) chip, there is an alterntive docker-compose file:
+If you are on mac with apple silicon (arm) chip, there is an alternative docker-compose file:
 ````
 docker-compose -f docker-compose-arm.yml up --build
 ````
